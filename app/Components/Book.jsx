@@ -1,0 +1,20 @@
+import styles from '../../styles/BookList.module.css';
+
+const Book = ({ book, onClickBook }) => {
+    //console.log(book)
+
+    const onClickHandler = () => {
+        onClickBook(book)
+    }
+    return (
+        <div className={styles.book}>
+            <img
+                src={book.cover}
+                alt={`of book ${book.title}`}
+                onClick={onClickHandler} />
+        </div>
+
+    )
+}
+
+export default Book;
