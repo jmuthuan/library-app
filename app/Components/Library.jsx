@@ -24,11 +24,14 @@ const Library = () => {
         })
         setAvailableBooks(available)
 
+        let {max} = getMinMaxPages(available)
+        setMaxPages(max);       
+
     }, [allBooks])
 
     const getAllBooks = async () => {
         let allBk = await getBooks();
-        setAllBooks(allBk.library);
+        setAllBooks(allBk.library);        
     }
 
     const onClickBook = (bookData) => {

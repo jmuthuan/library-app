@@ -8,11 +8,13 @@ const BookList = ({ books, genreFilter, maxPages, onClickBook }) => {
 
     let bookArray = [];
 
-    console.log(genreFilter)
+    console.log(maxPages)
 
     books.forEach((value) => {
         if (genreFilter === 'All' || genreFilter === value.genre) {
-            bookArray.push(value);
+            if(value.pages <= maxPages){
+                bookArray.push(value);
+            }            
         }
     })
 

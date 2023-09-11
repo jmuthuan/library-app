@@ -3,7 +3,7 @@ import styles from '../../styles/BookList.module.css';
 const Book = ({ book, onClickBook }) => {    
 
     const onClickHandler = () => {
-        onClickBook(book)
+        //onClickBook(book)
     }
     return (
         <div className={styles.book}>
