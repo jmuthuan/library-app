@@ -4,28 +4,33 @@ import styles from '../../styles/BookList.module.css'
 import Book from "./Book";
 import Link from "next/link";
 
-const BookList = ({ books, onClickBook }) => {
+const BookList = ({ books, genreFilter, maxPages, onClickBook }) => {
 
     let bookArray = [];
 
+    console.log(genreFilter)
+
     books.forEach((value) => {
-        bookArray.push(value);
+        if (genreFilter === 'All' || genreFilter === value.genre) {
+            bookArray.push(value);
+        }
     })
 
     return (
 
-        <div className={styles['book-container']}>
-            {
-                bookArray.map(book => {
-                    return (
-                        <Link href={`book/${book.ISBN}`} key={book.ISBN}>
-                            <Book                                
-                                book={book}
-                                onClickBook={onClickBook} />
-                        </Link>
-                    )
-                })
-            }
+        <div className={styles['book-container']}>            
+                <span> {bookArray.length} books</span>
+                {
+                    bookArray.map(book => {
+                        return (
+                            <Link href={`book/${book.ISBN}`} key={book.ISBN} >
+                                <Book
+                                    book={book}
+                                    onClickBook={onClickBook} />
+                            </Link>
+                        )
+                    })
+                }        
         </div>
 
     )

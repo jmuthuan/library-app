@@ -1,7 +1,6 @@
 import styles from '../../styles/BookList.module.css';
 
-const Book = ({ book, onClickBook }) => {
-    //console.log(book)
+const Book = ({ book, onClickBook }) => {    
 
     const onClickHandler = () => {
         onClickBook(book)

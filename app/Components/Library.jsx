@@ -11,6 +11,7 @@ const Library = () => {
     const [readBooks, setReadBooks] = useState(new Map());
     const [availableBooks, setAvailableBooks] = useState(new Map())
     const [maxPages, setMaxPages] = useState(0);
+    const [genreFilter, setGenreFilter] = useState('All');    
 
     useEffect(() => {
         getAllBooks();
@@ -50,6 +51,10 @@ const Library = () => {
     const onChangeRange = (e) => {        
         setValue();
         setMaxPages(e.target.value)
+    }
+
+    const handleGenre = (e) =>{               
+        setGenreFilter(e.target.value)
     }
 
     if (allBooks?.length === 0) { return (<div>Loading...</div>) }
@@ -94,10 +99,10 @@ const Library = () => {
                         onChange={onChangeRange} />
                 </div>
                 <span> max: {max}</span>
-
+                <br/>
 
                 <label htmlFor="page-genre">Filter by genre: </label>
-                <select name="page-genre" id="page-genre">
+                <select name="page-genre" id="page-genre" onChange={handleGenre}>
                     {
                         genres.map(genre => {
                             return (
@@ -105,22 +110,25 @@ const Library = () => {
                             )
                         })
                     }
-
                 </select>
             </section>
 
 
             <section className="available-list">
-                <h3>Available Books</h3>
+                <h3>Available Books: </h3>
                 <BookList
                     books={availableBooks}
+                    genreFilter = {genreFilter}
+                    maxPages = {maxPages}
                     onClickBook={onClickBook} />
             </section>
 
             <section className="readable-list">
-                <h3>Read List Books</h3>
+                <h3>Read List Books: </h3>
                 <BookList
                     books={readBooks}
+                    genreFilter={'All'}
+                    maxPages = {maxPages}
                     onClickBook={onClickBook} />
             </section>
         </>
