@@ -4,6 +4,7 @@ const Book = ({ book, onClickBook }) => {
 
     const onClickHandler = () => {
         //onClickBook(book)
+        //TODO
     }
     return (
         <div className={styles.book}>

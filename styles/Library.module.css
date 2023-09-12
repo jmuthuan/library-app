@@ -62,3 +62,18 @@
     margin-left: -5px;
     margin-top: -1px;
   }
+
+
+  .available-list{
+    width: 60%;
+    background-color: cyan;
+  }
+
+  .readable-list{
+    width: 35%;
+    background-color: gray;
+  }
+
+  .filters{
+    width: 100%;
+  }

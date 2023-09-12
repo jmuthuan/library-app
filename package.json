@@ -2,7 +2,6 @@
   "name": "book-list",
   "version": "0.1.0",
   "private": true,
- 
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,6 +13,8 @@
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "18.2.0",
+    "styled-components": "^6.0.7"
   }
 }

@@ -5,13 +5,14 @@ import BookList from "./BookList";
 import getBooks from "@/utils/getBooks";
 import getMinMaxPages from "@/utils/getMinMaxPages";
 import styles from '../../styles/Library.module.css'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
     const [readBooks, setReadBooks] = useState(new Map());
     const [availableBooks, setAvailableBooks] = useState(new Map())
     const [maxPages, setMaxPages] = useState(0);
-    const [genreFilter, setGenreFilter] = useState('All');    
+    const [genreFilter, setGenreFilter] = useState('All');
 
     useEffect(() => {
         getAllBooks();
@@ -24,14 +25,14 @@ const Library = () => {
         })
         setAvailableBooks(available)
 
-        let {max} = getMinMaxPages(available)
-        setMaxPages(max);       
+        let { max } = getMinMaxPages(available)
+        setMaxPages(max);
 
     }, [allBooks])
 
     const getAllBooks = async () => {
         let allBk = await getBooks();
-        setAllBooks(allBk.library);        
+        setAllBooks(allBk.library);
     }
 
     const onClickBook = (bookData) => {
@@ -51,16 +52,16 @@ const Library = () => {
         setAvailableBooks(available);
     }
 
-    const onChangeRange = (e) => {        
+    const onChangeRange = (e) => {
         setValue();
         setMaxPages(e.target.value)
     }
 
-    const handleGenre = (e) =>{               
+    const handleGenre = (e) => {
         setGenreFilter(e.target.value)
     }
 
-    if (allBooks?.length === 0) { return (<div>Loading...</div>) }
+    if (allBooks?.length === 0) { return (<div>Loading...</div>) } //TODO - Loading skeleton
 
     let { min, max } = getMinMaxPages(availableBooks)
     let genres = ['All'];
@@ -83,10 +84,23 @@ const Library = () => {
         rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
     };
 
+    const handleDragEnd = ({ destination, source }) => {
+        // reorder list
+        
+
+        if(!destination) return;
+        if(destination.droppableId === source.droppableId &&
+            destination.index === source.index) return;
+
+        console.log('destination', destination);
+        console.log('source', source)
+    }
+
+
 
     return (
         <>
-            <section className="filters">
+            <section className={styles.filters}>
                 <label htmlFor="range">Filter by max-pages: </label>
                 <span>min: {min}</span>
                 <div className={styles['range-wrap']}>
@@ -102,7 +116,7 @@ const Library = () => {
                         onChange={onChangeRange} />
                 </div>
                 <span> max: {max}</span>
-                <br/>
+                <br />
 
                 <label htmlFor="page-genre">Filter by genre: </label>
                 <select name="page-genre" id="page-genre" onChange={handleGenre}>
@@ -116,24 +130,29 @@ const Library = () => {
                 </select>
             </section>
 
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <section className={styles['available-list']}>
+                    <h3>Available Books: </h3>
+                    <BookList
+                        books={availableBooks}
+                        genreFilter={genreFilter}
+                        maxPages={maxPages}
+                        onClickBook={onClickBook}
+                        onDragEnd={handleDragEnd}
+                        droppableId={'droppableAvailable'} />
+                </section>
 
-            <section className="available-list">
-                <h3>Available Books: </h3>
-                <BookList
-                    books={availableBooks}
-                    genreFilter = {genreFilter}
-                    maxPages = {maxPages}
-                    onClickBook={onClickBook} />
-            </section>
 
-            <section className="readable-list">
-                <h3>Read List Books: </h3>
-                <BookList
-                    books={readBooks}
-                    genreFilter={'All'}
-                    maxPages = {maxPages}
-                    onClickBook={onClickBook} />
-            </section>
+                <section className={styles["readable-list"]}>
+                    <h3>Read List Books: </h3>
+                    <BookList
+                        books={readBooks}
+                        genreFilter={'All'}
+                        maxPages={maxPages}
+                        onClickBook={onClickBook}
+                        droppableId={'droppableRead'} />
+                </section>
+            </DragDropContext>
         </>
     )
 }
