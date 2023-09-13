@@ -7,10 +7,8 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) => {
 
-    let bookArray = [];
-
-    // console.log(maxPages)
-
+    let bookArray = []; 
+    
     books.forEach((value) => {
         if (genreFilter === 'All' || genreFilter === value.genre) {
             if (value.pages <= maxPages) {
@@ -19,9 +17,11 @@ const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) =>
         }
     })
 
+    
+
     return (
         <><span> {bookArray.length} books</span>
-            <Droppable droppableId={droppableId}>
+            <Droppable droppableId={droppableId} >
                 {(provided, snapshot) => (
                     <div className={`${styles['book-container']} ${snapshot.isDraggingOver ? styles['drag-over']: ''}`}
                         ref={provided.innerRef}

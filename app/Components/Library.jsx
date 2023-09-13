@@ -6,6 +6,8 @@ import getBooks from "@/utils/getBooks";
 import getMinMaxPages from "@/utils/getMinMaxPages";
 import styles from '../../styles/Library.module.css'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import setNewMapBook from "@/utils/setNewMapBook";
+import sortBookMap from "@/utils/sortBookMap";
 
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
@@ -23,7 +25,7 @@ const Library = () => {
         allBooks.forEach((book) => {
             available.set(book.book.ISBN, book.book)
         })
-        setAvailableBooks(available)
+        setAvailableBooks(sortBookMap(available))
 
         let { max } = getMinMaxPages(available)
         setMaxPages(max);
@@ -49,7 +51,7 @@ const Library = () => {
 
         }
         setReadBooks(read);
-        setAvailableBooks(available);
+        setAvailableBooks(sortBookMap(available));
     }
 
     const onChangeRange = (e) => {
@@ -85,15 +87,36 @@ const Library = () => {
     };
 
     const handleDragEnd = ({ destination, source }) => {
-        // reorder list
-        
 
-        if(!destination) return;
-        if(destination.droppableId === source.droppableId &&
+        //element dropped out of drop-zone
+        if (!destination) return;
+        //element dropped in the same location 
+        if (destination.droppableId === source.droppableId &&
             destination.index === source.index) return;
+        //avoid reordenation in available list books    
+        if (source.droppableId === 'droppableAvailable' &&
+            source.droppableId === destination.droppableId) return;
 
-        console.log('destination', destination);
-        console.log('source', source)
+        //source: Available Book -> destination: Read Books
+        if (source.droppableId === 'droppableAvailable') {
+            let { newSourceBookMap, newDestinationBookMap } = setNewMapBook(source, destination, availableBooks, readBooks);
+            setReadBooks(newDestinationBookMap)
+            setAvailableBooks(sortBookMap(newSourceBookMap))
+        }
+
+        //source: Read Books -> destination: Available Books
+        else if (source.droppableId === 'droppableRead' &&
+            destination.droppableId === 'droppableAvailable') {
+            let { newSourceBookMap, newDestinationBookMap } = setNewMapBook(source, destination, readBooks, availableBooks);
+            setReadBooks(newSourceBookMap)
+            setAvailableBooks(sortBookMap(newDestinationBookMap))
+        }
+
+        //source and destination: Read Books (reorder Book List by dropping)
+        else {
+            let { newSourceBookMap } = setNewMapBook(source, destination, readBooks, readBooks)
+            setReadBooks(newSourceBookMap)            
+        }
     }
 
 
