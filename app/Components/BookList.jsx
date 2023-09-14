@@ -4,11 +4,32 @@ import styles from '../../styles/BookList.module.css'
 import Book from "./Book";
 import Link from "next/link";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { styled } from 'styled-components';
+
+const Container = styled.div`    
+    margin: 20px;    
+
+    &.droppableRead{
+        position: absolute;
+        top: ${(props) => (props.index * 75)}px;
+        transform: rotate(${() => (Math.random() * 20) - 10}deg);
+        z-index: ${(props) => (props.index)}
+        heigth: ${(props)=>(props.index)}
+    }
+
+    &.droppableRead a {
+        background-color: yellow;
+        padding:3px;        
+    }    
+    
+`
+
+
 
 const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) => {
 
-    let bookArray = []; 
-    
+    let bookArray = [];
+
     books.forEach((value) => {
         if (genreFilter === 'All' || genreFilter === value.genre) {
             if (value.pages <= maxPages) {
@@ -17,13 +38,11 @@ const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) =>
         }
     })
 
-    
-
     return (
         <><span> {bookArray.length} books</span>
             <Droppable droppableId={droppableId} >
                 {(provided, snapshot) => (
-                    <div className={`${styles['book-container']} ${snapshot.isDraggingOver ? styles['drag-over']: ''}`}
+                    <div className={`${styles['book-container']} ${droppableId} ${snapshot.isDraggingOver ? styles['drag-over'] : ''}`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}                        
                     >
@@ -34,14 +53,18 @@ const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) =>
                                     index={index}
                                     draggableId={book.ISBN}>
                                     {(provided, snapshot) => (
-                                        <Link href={`book/${book.ISBN}`}
+                                        <Container className={droppableId}
+                                            index={index}
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
-                                            {...provided.dragHandleProps} >
-                                            <Book
-                                                book={book}
-                                                onClickBook={onClickBook} />
-                                        </Link>
+                                            {...provided.dragHandleProps}>
+                                            <Link href={`book/${book.ISBN}`}
+                                            /* className={styles[droppableId]} */ >
+                                                <Book
+                                                    book={book}
+                                                    onClickBook={onClickBook} />
+                                            </Link>
+                                        </Container>
                                     )}
                                 </Draggable>
                             )
