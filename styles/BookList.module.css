@@ -1,49 +1,59 @@
-.book-container {
-    display: flex;
+.book-container {    
+    position: relative;
+}
+
+.droppableRead-container {
+    display: flex;    
+    background-color: green;
+    min-height: 300px;
+    flex-direction: column;
+
+}
+
+.droppableAvailable-container{   
+    display: flex;    
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    gap: 1rem;
+    gap: 1rem; 
     min-height: 300px;
-    position: relative;
-    
 }
 
 .book img {
     width: 10rem;
 }
 
-.droppableRead{
+.droppableRead {
     border: 2px solid white;
     position: relative;
     margin-top: 30px;
 }
 
-.droppableRead>a:nth-child(n){
+.droppableRead>a:nth-child(n) {
     transform: rotate(-5deg);
     right: 70px;
     position: absolute;
     top: calc(n*50px)
 }
 
-.droppableRead>a:nth-child(2n){
-    transform: rotate(0);;
+.droppableRead>a:nth-child(2n) {
+    transform: rotate(0);
     right: 50px;
     top: 50px;
     top: calc(2n*50px)
 }
 
-.droppableRead>a:nth-child(3n){
+.droppableRead>a:nth-child(3n) {
     transform: rotate(5deg);
     left: 130px;
-    top:100px;
+    top: 100px;
     top: calc(3n*50px)
 }
 
-.drag-over{
+.drag-over {
     background-color: red;
 }
 
-.droppableAvailable{
+.droppableAvailable {
     border: 2px dashed green;
 }

@@ -13,7 +13,7 @@ const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
     const [readBooks, setReadBooks] = useState(new Map());
     const [availableBooks, setAvailableBooks] = useState(new Map())
-    const [maxPages, setMaxPages] = useState(0);
+    const [maxPages, setMaxPages] = useState([]);
     const [genreFilter, setGenreFilter] = useState('All');
 
     useEffect(() => {
@@ -22,12 +22,30 @@ const Library = () => {
 
     useEffect(() => {
         let available = new Map();
-        allBooks.forEach((book) => {
-            available.set(book.book.ISBN, book.book)
-        })
-        setAvailableBooks(sortBookMap(available))
+        //restore data From LocalStorage
+        let localRead = JSON.parse(localStorage.getItem('readList'));
+        if (localRead) {
+            let read = new Map();
 
-        let { max } = getMinMaxPages(available)
+            localRead.forEach(element => (
+                read.set(element[0], element[1])
+            ))
+
+            JSON.parse(localStorage.getItem('availableList')).forEach(element=>(
+                available.set(element[0], element[1])
+            ))
+            setAvailableBooks(available);
+            setReadBooks(read);
+        }
+        else {
+           
+            allBooks.forEach((book) => {
+                available.set(book.book.ISBN, book.book)
+            })
+            setAvailableBooks(sortBookMap(available))
+        }
+
+        let { max } = getMinMaxPages(allBooks)
         setMaxPages(max);
 
     }, [allBooks])
@@ -35,23 +53,6 @@ const Library = () => {
     const getAllBooks = async () => {
         let allBk = await getBooks();
         setAllBooks(allBk.library);
-    }
-
-    const onClickBook = (bookData) => {
-        let read = new Map(readBooks);
-        let available = new Map(availableBooks);
-
-        if (read.has(bookData.ISBN)) {
-            read.delete(bookData.ISBN);
-            available.set(bookData.ISBN, bookData);
-
-        } else {
-            read.set(bookData.ISBN, bookData);
-            available.delete(bookData.ISBN);
-
-        }
-        setReadBooks(read);
-        setAvailableBooks(sortBookMap(available));
     }
 
     const onChangeRange = (e) => {
@@ -65,7 +66,7 @@ const Library = () => {
 
     if (allBooks?.length === 0) { return (<div>Loading...</div>) } //TODO - Loading skeleton
 
-    let { min, max } = getMinMaxPages(availableBooks)
+    let { min, max } = getMinMaxPages(allBooks)
     let genres = ['All'];
 
     allBooks.forEach((book) => {
@@ -99,27 +100,49 @@ const Library = () => {
 
         //source: Available Book -> destination: Read Books
         if (source.droppableId === 'droppableAvailable') {
-            let { newSourceBookMap, newDestinationBookMap } = setNewMapBook(source, destination, availableBooks, readBooks);
+            let { newSourceBookMap, newDestinationBookMap } = setNewMapBook(source, destination, availableBooks, readBooks, genreFilter, maxPages);
             setReadBooks(newDestinationBookMap)
             setAvailableBooks(sortBookMap(newSourceBookMap))
+
+            localStorage.setItem('readList', JSON.stringify([...newDestinationBookMap]))
+            localStorage.setItem('availableList', JSON.stringify([...newSourceBookMap]))
         }
 
         //source: Read Books -> destination: Available Books
         else if (source.droppableId === 'droppableRead' &&
             destination.droppableId === 'droppableAvailable') {
-            let { newSourceBookMap, newDestinationBookMap } = setNewMapBook(source, destination, readBooks, availableBooks);
+            let { newSourceBookMap, newDestinationBookMap } = setNewMapBook(source, destination, readBooks, availableBooks, genreFilter, maxPages);
             setReadBooks(newSourceBookMap)
             setAvailableBooks(sortBookMap(newDestinationBookMap))
+
+            localStorage.setItem('readList', JSON.stringify([...newSourceBookMap]))
+            localStorage.setItem('availableList', JSON.stringify([...newDestinationBookMap]))
         }
 
         //source and destination: Read Books (reorder Book List by dropping)
         else {
-            let { newSourceBookMap } = setNewMapBook(source, destination, readBooks, readBooks)
-            setReadBooks(newSourceBookMap)            
+            let { newSourceBookMap } = setNewMapBook(source, destination, readBooks, readBooks, genreFilter, maxPages)
+            setReadBooks(newSourceBookMap)
+
+            localStorage.setItem('readList', JSON.stringify([...newSourceBookMap]))
         }
     }
 
+    window.addEventListener('storage', event => {
+        let available = new Map();
+        JSON.parse(localStorage.getItem('availableList')).forEach(element => (
+            available.set(element[0], element[1])
+        ))
+        setAvailableBooks(available)
+        
+        let read = new Map();
+        JSON.parse(localStorage.getItem('readList')).forEach(element => (
+            read.set(element[0], element[1])
+        ))
+        setReadBooks(read)
+        
 
+    })
 
     return (
         <>
@@ -160,7 +183,6 @@ const Library = () => {
                         books={availableBooks}
                         genreFilter={genreFilter}
                         maxPages={maxPages}
-                        onClickBook={onClickBook}
                         onDragEnd={handleDragEnd}
                         droppableId={'droppableAvailable'} />
                 </section>
@@ -172,7 +194,6 @@ const Library = () => {
                         books={readBooks}
                         genreFilter={'All'}
                         maxPages={maxPages}
-                        onClickBook={onClickBook}
                         droppableId={'droppableRead'} />
                 </section>
             </DragDropContext>

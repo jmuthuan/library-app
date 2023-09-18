@@ -5,7 +5,7 @@ import styles from '../../../styles/BookDetail.module.css';
 const BookDetail =  async ({params})=>{
 
      let bookDetail = await getBookData(params.id);
-     console.log(bookDetail)
+     //console.log(bookDetail)
     
 
     return ( 
@@ -13,7 +13,7 @@ const BookDetail =  async ({params})=>{
             <section className={styles.book}>
                 <h2>{bookDetail.title}</h2>
                 <img src={bookDetail.cover} alt={`cover of book ${bookDetail.title}`}/>
-                <p>{bookDetail.synpsis}</p>
+                <p>{bookDetail.synopsis}</p>
                 <p>Genre: {bookDetail.genre}</p>
                 <p>Pages: {bookDetail.pages}</p>
                 <p>Year: {bookDetail.year}</p>

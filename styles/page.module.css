@@ -14,7 +14,7 @@
   align-items: flex-start;
 
   justify-content: inherit;
-  align-items: inherit;
+  align-items: start;
   font-size: 0.85rem;
   max-width: var(--max-width);
   width: 100%;

@@ -1,7 +1,10 @@
-const setNewMapBook = (sourceDrop, destinationDrop, sourceBookMap, destinationBookMap) => {
+import filterBooks from "./filterBooks";
 
-    let book = Array.from(sourceBookMap.values())[sourceDrop.index]
+const setNewMapBook = (sourceDrop, destinationDrop, sourceBookMap, destinationBookMap, genreFilter, maxPages) => {
 
+    let book = filterBooks(sourceBookMap, genreFilter, maxPages)[sourceDrop.index]
+    const isbn = book.ISBN;
+  
     let destinationBookArray = Array.from(destinationBookMap.values());
     destinationBookArray.splice(destinationDrop.index, 0, book)
 
@@ -11,11 +14,13 @@ const setNewMapBook = (sourceDrop, destinationDrop, sourceBookMap, destinationBo
     })
 
     let sourceBookArray = Array.from(sourceBookMap.values());
+    const sourceIndex = sourceBookArray.findIndex(element => element.ISBN === isbn)       
     let newSourceBookMap = new Map()
 
-    sourceBookArray.splice(sourceDrop.index, 1);
+    sourceBookArray.splice(sourceIndex, 1); /// 
     if (sourceDrop.droppableId === destinationDrop.droppableId) {
-        sourceBookArray.splice(destinationDrop.index, 0, book);
+        const destinationIndex = destinationBookArray.findIndex(element => element.ISBN === isbn)
+        sourceBookArray.splice(destinationIndex, 0, book);
     }
 
     sourceBookArray.forEach((book) =>

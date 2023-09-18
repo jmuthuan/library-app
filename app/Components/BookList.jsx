@@ -5,46 +5,51 @@ import Book from "./Book";
 import Link from "next/link";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { styled } from 'styled-components';
+import filterBooks from "@/utils/filterBooks";
+import { Ma_Shan_Zheng } from "next/font/google";
+import { useMemo, useState } from "react";
 
-const Container = styled.div`    
-    margin: 20px;    
-
+const Container = styled.div`      
     &.droppableRead{
-        position: absolute;
-        top: ${(props) => (props.index * 75)}px;
-        transform: rotate(${() => (Math.random() * 20) - 10}deg);
-        z-index: ${(props) => (props.index)}
-        heigth: ${(props)=>(props.index)}
+        position: relative;
+        bottom: ${props => (props.$index * 170)}px;
+        transform: rotate(${props => props.$angle}deg);
+        z-index: ${props => props.$index};       
     }
 
     &.droppableRead a {
-        background-color: yellow;
-        padding:3px;        
-    }    
-    
+        padding:3px;  
+    }
 `
 
+const BookContainer = styled.div`
+&.${styles[`droppableRead-container`]}{
+    height: ${(props) => ((props.$length) * 92 + 215 + (props.$drag * 1))}px;
+}
+`
+const BookList = ({ books, genreFilter, maxPages, droppableId }) => {
 
+    const [angles, setAngles] = useState([]);
 
-const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) => {
-
-    let bookArray = [];
-
-    books.forEach((value) => {
-        if (genreFilter === 'All' || genreFilter === value.genre) {
-            if (value.pages <= maxPages) {
-                bookArray.push(value);
-            }
-        }
-    })
+    let bookArray = filterBooks(books, genreFilter, maxPages);
+    
+    useMemo(() => {
+        let aux = []
+        bookArray.forEach(() => {
+            aux.push(Math.random() * 20 - 10)
+        })      
+        setAngles(aux);
+    }, [bookArray.length])
 
     return (
         <><span> {bookArray.length} books</span>
             <Droppable droppableId={droppableId} >
                 {(provided, snapshot) => (
-                    <div className={`${styles['book-container']} ${droppableId} ${snapshot.isDraggingOver ? styles['drag-over'] : ''}`}
+                    <BookContainer className={`${styles['book-container']} ${styles[`${droppableId}-container`]} ${snapshot.isDraggingOver ? styles['drag-over'] : ''}`}
                         ref={provided.innerRef}
-                        {...provided.droppableProps}                        
+                        {...provided.droppableProps}
+                        $length={bookArray.length}
+                        $drag={`${snapshot.isDraggingOver ? 300 : 0}`}
                     >
 
                         {bookArray.map((book, index) => {
@@ -52,17 +57,17 @@ const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) =>
                                 <Draggable key={book.ISBN}
                                     index={index}
                                     draggableId={book.ISBN}>
-                                    {(provided, snapshot) => (
+                                    {(provided, snapshot) => (                                        
                                         <Container className={droppableId}
-                                            index={index}
+                                            $index={index}
+                                            $angle={angles[index]}                                          
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}>
-                                            <Link href={`book/${book.ISBN}`}
-                                            /* className={styles[droppableId]} */ >
+                                            <Link href={`book/${book.ISBN}`}>                                                                                         
                                                 <Book
                                                     book={book}
-                                                    onClickBook={onClickBook} />
+                                                    />
                                             </Link>
                                         </Container>
                                     )}
@@ -70,7 +75,7 @@ const BookList = ({ books, genreFilter, maxPages, onClickBook, droppableId }) =>
                             )
                         })}
                         {provided.placeholder}
-                    </div>)}
+                    </BookContainer>)}
             </Droppable>
         </>
 

@@ -2,15 +2,15 @@ const getMinMaxPages = (books) =>{
    
     let min, max = 0; 
 
-    books.forEach(value => {
+    books.forEach(element => {       
         if(!min){
-            min = value.pages
+            min = element.book.pages
         } 
-        if(value.pages < min){
-            min= value.pages
+        if(element.book.pages < min){
+            min= element.book.pages
         }
-        else if(value.pages > max){
-            max = value.pages
+        else if(element.book.pages > max){
+            max = element.book.pages
         }
     })
 
