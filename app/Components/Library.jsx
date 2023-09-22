@@ -15,6 +15,7 @@ const Library = () => {
     const [availableBooks, setAvailableBooks] = useState(new Map())
     const [maxPages, setMaxPages] = useState([]);
     const [genreFilter, setGenreFilter] = useState('All');
+    const [isHover, setIsHover] = useState(false);
 
     useEffect(() => {
         getAllBooks();
@@ -87,7 +88,7 @@ const Library = () => {
         rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
     };
 
-    const handleDragEnd = ({ destination, source }) => {
+    const handleDragEnd = ({ destination, source }) => {       
 
         //element dropped out of drop-zone
         if (!destination) return;
@@ -123,11 +124,20 @@ const Library = () => {
         else {
             let { newSourceBookMap } = setNewMapBook(source, destination, readBooks, readBooks, genreFilter, maxPages)
             setReadBooks(newSourceBookMap)
-
-            localStorage.setItem('readList', JSON.stringify([...newSourceBookMap]))
+            localStorage.setItem('readList', JSON.stringify([...newSourceBookMap]))            
         }
     }
 
+
+    const handleMouseEnter = ()=>{
+        setIsHover(true);       
+    }
+
+    const handleMouseLeave = ()=>{
+        setIsHover(false);
+    }
+
+    //sync browser tabs information
     window.addEventListener('storage', event => {
         let available = new Map();
         JSON.parse(localStorage.getItem('availableList')).forEach(element => (
@@ -176,14 +186,13 @@ const Library = () => {
                 </select>
             </section>
 
-            <DragDropContext onDragEnd={handleDragEnd}>
+            <DragDropContext onDragEnd={handleDragEnd} >
                 <section className={styles['available-list']}>
                     <h3>Available Books: </h3>
                     <BookList
                         books={availableBooks}
                         genreFilter={genreFilter}
-                        maxPages={maxPages}
-                        onDragEnd={handleDragEnd}
+                        maxPages={maxPages}                                               
                         droppableId={'droppableAvailable'} />
                 </section>
 
@@ -194,7 +203,10 @@ const Library = () => {
                         books={readBooks}
                         genreFilter={'All'}
                         maxPages={maxPages}
-                        droppableId={'droppableRead'} />
+                        droppableId={'droppableRead'} 
+                        isHover={isHover}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}/>
                 </section>
             </DragDropContext>
         </>

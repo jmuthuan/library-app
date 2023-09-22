@@ -6,15 +6,14 @@ import Link from "next/link";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { styled } from 'styled-components';
 import filterBooks from "@/utils/filterBooks";
-import { Ma_Shan_Zheng } from "next/font/google";
 import { useMemo, useState } from "react";
 
 const Container = styled.div`      
     &.droppableRead{
         position: relative;
-        bottom: ${props => (props.$index * 170)}px;
+        bottom: ${props => (props.$hover? props.$index*0 : props.$index * 170)}px;
         transform: rotate(${props => props.$angle}deg);
-        z-index: ${props => props.$index};       
+        z-index: ${props => props.$index};            
     }
 
     &.droppableRead a {
@@ -24,10 +23,10 @@ const Container = styled.div`
 
 const BookContainer = styled.div`
 &.${styles[`droppableRead-container`]}{
-    height: ${(props) => ((props.$length) * 92 + 215 + (props.$drag * 1))}px;
+    height: ${(props) => (props.$hover? (props.$length*255) : (props.$length) * 92 + 215)*1}px;
 }
 `
-const BookList = ({ books, genreFilter, maxPages, droppableId }) => {
+const BookList = ({ books, genreFilter, maxPages, droppableId, isHover, onMouseEnter, onMouseLeave }) => {
 
     const [angles, setAngles] = useState([]);
 
@@ -46,10 +45,12 @@ const BookList = ({ books, genreFilter, maxPages, droppableId }) => {
             <Droppable droppableId={droppableId} >
                 {(provided, snapshot) => (
                     <BookContainer className={`${styles['book-container']} ${styles[`${droppableId}-container`]} ${snapshot.isDraggingOver ? styles['drag-over'] : ''}`}
+                    onMouseEnter={onMouseEnter}   
+                    onMouseLeave={onMouseLeave} 
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        $length={bookArray.length}
-                        $drag={`${snapshot.isDraggingOver ? 300 : 0}`}
+                        $length={bookArray.length}  
+                        $hover={isHover}                     
                     >
 
                         {bookArray.map((book, index) => {
@@ -58,13 +59,14 @@ const BookList = ({ books, genreFilter, maxPages, droppableId }) => {
                                     index={index}
                                     draggableId={book.ISBN}>
                                     {(provided, snapshot) => (                                        
-                                        <Container className={droppableId}
+                                        <Container className={`${droppableId} ${styles['droppableRead']}`}                                                                               
                                             $index={index}
-                                            $angle={angles[index]}                                          
+                                            $angle={angles[index]}
+                                            $hover={isHover}                                          
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}>
-                                            <Link href={`book/${book.ISBN}`}>                                                                                         
+                                            <Link href={`book/${book.ISBN}`}>                                                                                
                                                 <Book
                                                     book={book}
                                                     />

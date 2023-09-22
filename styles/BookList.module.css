@@ -7,7 +7,7 @@
     background-color: green;
     min-height: 300px;
     flex-direction: column;
-
+    transition: all 0.3s linear;    
 }
 
 .droppableAvailable-container{   
@@ -23,13 +23,13 @@
     width: 10rem;
 }
 
-.droppableRead {
-    border: 2px solid white;
-    position: relative;
-    margin-top: 30px;
+.droppableRead {    
+   /*  position: relative; */
+   /*  margin-top: 30px; */
+    transition: all 0.3s linear;    
 }
 
-.droppableRead>a:nth-child(n) {
+/* .droppableRead>a:nth-child(n) {
     transform: rotate(-5deg);
     right: 70px;
     position: absolute;
@@ -48,7 +48,7 @@
     left: 130px;
     top: 100px;
     top: calc(3n*50px)
-}
+} */
 
 .drag-over {
     background-color: red;
