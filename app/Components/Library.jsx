@@ -8,6 +8,11 @@ import styles from '../../styles/Library.module.css'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import setNewMapBook from "@/utils/setNewMapBook";
 import sortBookMap from "@/utils/sortBookMap";
+import styled from "styled-components";
+import arrowImg from '../../src/arrow.svg';
+import nextimage from '../../public/next.svg'
+import Image from "next/image";
+import ArrowHelp from "./ArrowHelp";
 
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
@@ -16,6 +21,7 @@ const Library = () => {
     const [maxPages, setMaxPages] = useState([]);
     const [genreFilter, setGenreFilter] = useState('All');
     const [isHover, setIsHover] = useState(false);
+    const [isDraggin, setIsDraggin] = useState(false);
 
     useEffect(() => {
         getAllBooks();
@@ -32,14 +38,14 @@ const Library = () => {
                 read.set(element[0], element[1])
             ))
 
-            JSON.parse(localStorage.getItem('availableList')).forEach(element=>(
+            JSON.parse(localStorage.getItem('availableList')).forEach(element => (
                 available.set(element[0], element[1])
             ))
             setAvailableBooks(available);
             setReadBooks(read);
         }
         else {
-           
+
             allBooks.forEach((book) => {
                 available.set(book.book.ISBN, book.book)
             })
@@ -88,7 +94,8 @@ const Library = () => {
         rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
     };
 
-    const handleDragEnd = ({ destination, source }) => {       
+    const handleDragEnd = ({ destination, source }) => {
+        setIsDraggin(false);
 
         //element dropped out of drop-zone
         if (!destination) return;
@@ -124,16 +131,20 @@ const Library = () => {
         else {
             let { newSourceBookMap } = setNewMapBook(source, destination, readBooks, readBooks, genreFilter, maxPages)
             setReadBooks(newSourceBookMap)
-            localStorage.setItem('readList', JSON.stringify([...newSourceBookMap]))            
+            localStorage.setItem('readList', JSON.stringify([...newSourceBookMap]))
         }
     }
 
-
-    const handleMouseEnter = ()=>{
-        setIsHover(true);       
+    const handleDragStart = () =>{
+        setIsDraggin(true)
     }
 
-    const handleMouseLeave = ()=>{
+
+    const handleMouseEnter = () => {
+        setIsHover(true);
+    }
+
+    const handleMouseLeave = () => {
         setIsHover(false);
     }
 
@@ -144,13 +155,13 @@ const Library = () => {
             available.set(element[0], element[1])
         ))
         setAvailableBooks(available)
-        
+
         let read = new Map();
         JSON.parse(localStorage.getItem('readList')).forEach(element => (
             read.set(element[0], element[1])
         ))
         setReadBooks(read)
-        
+
 
     })
 
@@ -186,33 +197,44 @@ const Library = () => {
                 </select>
             </section>
 
-            <DragDropContext onDragEnd={handleDragEnd} >
+            <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
                 <section className={styles['available-list']}>
-                    <h3>Available Books: </h3>
-                    <BookList
-                        books={availableBooks}
-                        genreFilter={genreFilter}
-                        maxPages={maxPages}                                               
-                        droppableId={'droppableAvailable'} />
+                    <span className={`${styles['help-span']} ${isDraggin? '' : styles['hide-help']}`}>
+                        <h3>Available Books: </h3>
+                        <BookList
+                            books={availableBooks}
+                            genreFilter={genreFilter}
+                            maxPages={maxPages}
+                            droppableId={'droppableAvailable'} />
+                    </span>
                 </section>
 
+                <section className={`${styles.helper} ${isDraggin? '': styles['hide-help']}`}>   
+                    <ArrowHelp number={3}/>
+                </section>
 
                 <section className={styles["readable-list"]}>
                     <h3>Read List Books: </h3>
                     <BookList
                         books={readBooks}
                         genreFilter={'All'}
-                        maxPages={maxPages}
-                        droppableId={'droppableRead'} 
+                        maxPages={max}
+                        droppableId={'droppableRead'}
                         isHover={isHover}
                         onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}/>
+                        onMouseLeave={handleMouseLeave} />
                 </section>
             </DragDropContext>
         </>
     )
 }
 
+const Arrow = styled.span`
+position: relative;
+top: 200px;
+right: ${props => props.$index * 20}px;
+
+`
 
 
 

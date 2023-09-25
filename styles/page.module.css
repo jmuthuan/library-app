@@ -6,6 +6,9 @@
   /* align-items: center; */
   padding: 6rem;
   min-height: 100vh;
+  background-image: url('../src/library1.jpg');
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .description {

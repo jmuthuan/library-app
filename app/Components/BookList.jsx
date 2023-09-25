@@ -11,7 +11,7 @@ import { useMemo, useState } from "react";
 const Container = styled.div`      
     &.droppableRead{
         position: relative;
-        bottom: ${props => (props.$hover? props.$index*0 : props.$index * 170)}px;
+        bottom: ${props => (props.$hover? props.$index*0 : props.$index * 200)}px;
         transform: rotate(${props => props.$angle}deg);
         z-index: ${props => props.$index};            
     }
@@ -23,7 +23,7 @@ const Container = styled.div`
 
 const BookContainer = styled.div`
 &.${styles[`droppableRead-container`]}{
-    height: ${(props) => (props.$hover? (props.$length*255) : (props.$length) * 92 + 215)*1}px;
+    height: ${(props) => (props.$hover? (props.$length*255) : (props.$length) * 92 +215*0)*1}px;
 }
 `
 const BookList = ({ books, genreFilter, maxPages, droppableId, isHover, onMouseEnter, onMouseLeave }) => {
