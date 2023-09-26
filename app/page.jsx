@@ -7,9 +7,8 @@ export default function Home() {
  
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-          Main Page
-            <Library />
+      <div className={styles.description}>        
+        <Library />
       </div>
     </main>
   )

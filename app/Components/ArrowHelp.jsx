@@ -9,7 +9,7 @@ const ArrowHelp = ({ number }) => {
             <Arrowsvg width="32" height="50" xmlns="http://www.w3.org/2000/svg" $index={i} key={i} className='arrow-svg'>
                 <g>
                     <title>Layer 1</title>
-                    <path fill="none" stroke-width="2" d="m19.18095,25.50001l-16.68095,-23.00001l10.98572,0l16.68095,23.00001l-16.68095,22.99999l-10.98572,0l16.68095,-22.99999z" id="svg_5" />
+                    <path fill="none" strokeWidth="2" d="m19.18095,25.50001l-16.68095,-23.00001l10.98572,0l16.68095,23.00001l-16.68095,22.99999l-10.98572,0l16.68095,-22.99999z" id="svg_5" />
                 </g>
             </Arrowsvg>
         )

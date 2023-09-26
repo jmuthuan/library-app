@@ -1,10 +1,10 @@
 .book-container {    
     position: relative;
+    margin: 1rem 0;
 }
 
 .droppableRead-container {
-    display: flex;    
-   /*  background-color: green; */
+    display: flex;     
     min-height: 300px;
     flex-direction: column;
     transition: all 0.3s linear;    

@@ -1,5 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import logo from '../src/logo1.png';
+import styles from '../styles/page.module.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -9,9 +11,20 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  //console.log(inter);
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <header className={styles.header}>
+          <div className={styles['header-container']}>
+            <img src={logo.src} alt='logo miduteca' />
+          </div>
+        </header>
+        {children}
+      </body>
+      {/* <footer>
+        TODO Footer
+      </footer> */}
     </html>
   )
 }

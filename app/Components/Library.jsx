@@ -135,7 +135,7 @@ const Library = () => {
         }
     }
 
-    const handleDragStart = () =>{
+    const handleDragStart = () => {
         setIsDraggin(true)
     }
 
@@ -168,39 +168,42 @@ const Library = () => {
     return (
         <>
             <section className={styles.filters}>
-                <label htmlFor="range">Filter by max-pages: </label>
-                <span>min: {min}</span>
-                <div className={styles['range-wrap']}>
-                    <div className={styles['range-value']} id="rangeV"></div>
-                    <input
-                        type="range"
-                        id='range'
-                        name='range'
-                        min={min}
-                        max={max + 50}
-                        value={maxPages}
-                        step={50}
-                        onChange={onChangeRange} />
+                <div className={styles['filter-pages-container']}>
+                    <label htmlFor="range" className={styles.label}>Filter by pages: </label>     
+                    <span className={styles.span}>{min}</span>               
+                    <div className={styles['range-wrap']}>
+                        <div className={styles['range-value']} id="rangeV"></div>
+                        <input
+                            type="range"
+                            id='range'
+                            name='range'
+                            min={min}
+                            max={max + 50}
+                            value={maxPages}
+                            step={50}
+                            onChange={onChangeRange} />
+                    </div>
+                    <span className={styles.span}>{max}</span>
                 </div>
-                <span> max: {max}</span>
-                <br />
 
-                <label htmlFor="page-genre">Filter by genre: </label>
-                <select name="page-genre" id="page-genre" onChange={handleGenre}>
-                    {
-                        genres.map(genre => {
-                            return (
-                                <option key={genre} value={genre}>{genre}</option>
-                            )
-                        })
-                    }
-                </select>
+                <div className={styles['filter-genre-container']}>
+                    <label htmlFor="page-genre">Filter by genre: </label>
+                    <select className={styles.select} name="page-genre" id="page-genre" onChange={handleGenre}>
+                        {
+                            genres.map(genre => {
+                                return (
+                                    <option key={genre} value={genre}>{genre}</option>
+                                )
+                            })
+                        }
+                    </select>
+                </div>
             </section>
 
             <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
                 <section className={styles['available-list']}>
-                    <span className={`${styles['help-span']} ${isDraggin? '' : styles['hide-help']}`}>
-                        <h3>Available Books: </h3>
+                    <span className={`${styles['help-span']} ${isDraggin ? '' : styles['hide-help']}`}>
+                        <h3 className={styles.h3}>Available Books: </h3>
                         <BookList
                             books={availableBooks}
                             genreFilter={genreFilter}
@@ -209,12 +212,12 @@ const Library = () => {
                     </span>
                 </section>
 
-                <section className={`${styles.helper} ${isDraggin? '': styles['hide-help']}`}>   
-                    <ArrowHelp number={3}/>
+                <section className={`${styles.helper} ${isDraggin ? '' : styles['hide-help']}`}>
+                    <ArrowHelp number={3} />
                 </section>
 
                 <section className={styles["readable-list"]}>
-                    <h3>Read List Books: </h3>
+                    <h3 className={styles.h3}>Read List Books: </h3>
                     <BookList
                         books={readBooks}
                         genreFilter={'All'}
