@@ -11,14 +11,22 @@
 
 .header{
   text-align: center;
-  padding: 1rem 0;
+  padding: 0.5rem 0 1rem 0;
   background-image:linear-gradient(rgba(17,17,17,1) 80%, rgba(40,40,40, 0.3) 85%) ;
   border-bottom: 1px rgba(255,255,255, 0.5) solid;
 }
 
-.header-container>img{
+.header-logo>a>img{
   width: 350px;
   height: auto;
+}
+
+.header-link{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 2rem;
 }
 
 .description {
@@ -32,7 +40,7 @@
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;
-  font-family: var(--font-mono);
+  /* font-family: var(--font-mono); */
 }
 
 .description a {

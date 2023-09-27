@@ -1,3 +1,56 @@
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  
+    padding: 2rem 10rem;
+    min-height: 100vh;
+    background-image: url('../src/library1.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.book{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background-color: rgba(17,17,17, 0.8);
+    border-radius: 10px;
+    box-shadow: 12px 12px 4px rgba(0, 0, 0, 0.7);
+    padding: 16px;
+}
+
+.book-info{
+    width: 50%;
+}
+
+.h2{
+    font-size: 2rem;
+    padding-left: 8rem;
+}
+
+.underline{
+    text-decoration: underline;
+    font-weight: 700;
+}
 .book >img {
-    max-width: 450px;
+    max-width: 250px;
+    width: 50%;
+}
+
+
+.author{
+    margin-top: 2rem;
+}
+
+.ul{
+    padding-left: 2rem;
+    margin-top: 0.5rem;
+}
+
+.li{
+    list-style-type: none;
+    font-style: italic;
+    padding-left: 1.5rem;
 }

@@ -187,7 +187,7 @@ const Library = () => {
                 </div>
 
                 <div className={styles['filter-genre-container']}>
-                    <label htmlFor="page-genre">Filter by genre: </label>
+                    <label htmlFor="page-genre" className={styles.label}>Filter by genre: </label>
                     <select className={styles.select} name="page-genre" id="page-genre" onChange={handleGenre}>
                         {
                             genres.map(genre => {
