@@ -1,3 +1,4 @@
+import Footer from './Components/Footer'
 import Header from './Components/Header'
 import './globals.css'
 import { Saira } from 'next/font/google'
@@ -31,10 +32,8 @@ export default function RootLayout({ children }) {
       <body className={font.className}>
         <Header />
         {children}
-      </body>
-      {/* <footer>
-        TODO Footer
-      </footer> */}    
+        <Footer />
+      </body>       
     </html>
   )
 }

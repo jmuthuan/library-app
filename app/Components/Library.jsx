@@ -9,9 +9,6 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import setNewMapBook from "@/utils/setNewMapBook";
 import sortBookMap from "@/utils/sortBookMap";
 import styled from "styled-components";
-import arrowImg from '../../src/arrow.svg';
-import nextimage from '../../public/next.svg'
-import Image from "next/image";
 import ArrowHelp from "./ArrowHelp";
 
 const Library = () => {

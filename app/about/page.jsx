@@ -11,17 +11,17 @@ const About = () => {
 
     return (
         <main className={`${font.className} ${styles.main}`}>
-            <div className="about_page_wrapper">
+            <div className="about-page-wrapper">
                 <section className={styles['about-page']}><span className={styles.span}>About Page</span>
-                    <div className="about_page_info">
+                    <div className="about-page-info">
                         <p>
-                            This site was created as a technical challenge 
+                            This site was created as a technical challenge
                             from <a href='https://github.com/midudev/pruebas-tecnicas/blob/main/pruebas/01-reading-list/README.md'>
-                                 @midudev</a>.
+                                @midudev</a>.
                         </p>
                         <p>
-                            On the site you have two list of books. One of this list is 'Available Books', where you 
-                            can click on any book to get more information about it. Additionally, you can select your favourites books and 
+                            On the site you have two list of books. One of this list is 'Available Books', where you
+                            can click on any book to get more information about it. Additionally, you can select your favourites books and
                             place them in the 'Readable Books List' using a drag and drop action.
                             Also, in the 'Readable Book List' you can reorder the books as you like by dragging and dropping them.
                         </p>
@@ -35,33 +35,36 @@ const About = () => {
                 </section>
 
                 <section className={styles['about-technoligies']}><span className={styles.span}>Technologies</span>
-                    <div className="about_technologies_info">
+                    <div className={styles['about-technologies-info']}>
                         <p>
-                            This site was built using Next JS. In addition, JSX, HTML and CSS were used.
+                            This site was built using Next JS / React. In addition, JSX, HTML and CSS were used.
                         </p>
-                        <div className='about_technologies_logos'>
+                        <p>
+                            Also was implemented the drag and drop action for desktop devices.
+                        </p>
+                        <div className={styles['about-technologies-logos']}>
+                            <a href="https://nextjs.org/"><img className={styles['img-logo']} src="../logos/next.svg" alt='next logo' /></a>
                             <a href="https://react.dev/"><img className={styles['img-logo']} src="../logos/react.png" alt='react logo' /></a>
                             <a href="https://react.dev/learn/writing-markup-with-jsx"><img className={styles['img-logo']} src="../logos/jsx.png" alt='jsx logo' /></a>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/HTML"><img className={styles['img-logo']} src="../logos/html.svg" alt='html logo' /></a>
-                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS"><img className={styles['img-logo']} src="../logos/css.svg" alt='css logo' /></a>
-                            <a href=""><img className={styles['img-logo']} src="../logos/next.svg" alt='next logo' /></a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS"><img className={styles['img-logo']} src="../logos/css.svg" alt='css logo' /></a>                            
                         </div>
                     </div>
                 </section>
 
                 <section className={styles['about-developers']}><span className={styles.span}>Developers Team</span>
 
-                    <div className='about_developers_info'>
-                        <div className='about_developer_avatar_name'>
+                    <div className={styles['about-developers-info']}>
+                        <div className={styles['about-developer-avatar-name']}>
                             <img className={styles['about-avatar']} src="../avatar.jpg" alt="developer" />
-                            <div className='developer_name'>José Muthuan</div>
-                            <div className='developer_titles'>Full Stack Developer & Electronic Engineer</div>
+                            <div className={styles['developer-name']}>José Muthuan</div>
+                            <div className={styles['developer-titles']}>Full Stack Developer <br/>& <br/> Electronic Engineer</div>
                             <div className={styles['developer-social-media']}>
                                 <a href='https://www.linkedin.com/in/jos%C3%A9-muthuan/'><img src="../logos/linkedin.svg" alt="link to linkedin" /></a>
                                 <a href='https://github.com/jmuthuan'><img src="../logos/github.svg" alt="link to github" /></a>
                             </div>
                         </div>
-                        <div className="about_developers_person">
+                        <div className={styles['about-developers-person']}>
                             <p>I am an Electronic Engineer with years of experience in industrial maintenance
                                 management. I always liked the programming environment: from programming microcontrollers in assembler,
                                 industrial PLCs in various languages, to software development. A few years ago I began to explore in

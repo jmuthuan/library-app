@@ -3,7 +3,6 @@ import styles from '../../styles/page.module.css';
 import Link from 'next/link';
 
 
-
 const Header = () =>{
 
     return(
