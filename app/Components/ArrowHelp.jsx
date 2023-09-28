@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import styles from '../../styles/Library.module.css';
 
-const ArrowHelp = ({ number }) => {
+const ArrowHelp = ({ number, reverse = false }) => {
     let output = [];
 
     for (let i = 0; i < number; i++) {
@@ -16,7 +16,9 @@ const ArrowHelp = ({ number }) => {
     }
 
     return (
-        output.map(element => element)
+        <div className={`${styles['arrow-div']} ${reverse ? styles['arrow-reverse'] : ''}`}>
+            {output.map(element => element)}
+        </div>
     )
 }
 
@@ -24,7 +26,7 @@ export default ArrowHelp;
 
 const Arrowsvg = styled.svg`
     stroke: white;   
-    animation: arrow-flash 1s ease-in-out ${props => props.$index*0.1}s infinite;
+    animation: arrow-flash 1s ease-in-out ${props => props.$index * 0.1}s infinite;
 
 
 

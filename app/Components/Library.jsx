@@ -20,7 +20,7 @@ const Library = () => {
     const [genreFilter, setGenreFilter] = useState('All');
     const [isHover, setIsHover] = useState(false);
     const [isDraggin, setIsDraggin] = useState(false);
-    const [showHelp, setShowHelp] = useState(localStorage.getItem('ShowPopUp') === 'false' ? false : true);
+    const [showHelp, setShowHelp] = useState();
 
     useEffect(() => {
         getAllBooks();
@@ -55,6 +55,13 @@ const Library = () => {
         setMaxPages(max);
 
     }, [allBooks])
+
+    useEffect(()=>{
+        const showHelpLocale = localStorage.getItem('ShowPopUp') === 'false' ? false : true;
+        const showHelpSession = sessionStorage.getItem('ShowPopUp') === 'false' ? false : true;
+
+        setShowHelp(showHelpLocale && showHelpSession);
+    },[])
 
     const getAllBooks = async () => {
         let allBk = await getBooks();
@@ -221,7 +228,7 @@ const Library = () => {
 
                 <section className={`${styles.helper} ${(isDraggin || showHelp) ? '' : styles['hide-help']}`}>
                     <ArrowHelp number={3} />
-                    <ArrowHelp number={3} className={styles['arrow-reverse']}/>
+                    <ArrowHelp number={3} reverse={true}/>
                 </section>
 
                 <section className={styles["readable-list"]}>

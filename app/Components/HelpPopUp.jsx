@@ -15,18 +15,17 @@ const HelpPopUp = ({open, handleShowHelp}) => {
     
     if(checkValue){
         localStorage.setItem('ShowPopUp', 'false');
-    }        
+    }  
+        sessionStorage.setItem('ShowPopUp', 'false');      
         handleShowHelp(false);
         close();
     }
 
     return (
-        <Popup
-            /*  trigger={<button className={styles['button']}> Open Modal </button>} */
+        <Popup            
             modal
             nested
-            open
-            position='top center'            
+            open           
         >
             {close => (
                 <div className={styles['modal']}>
@@ -52,18 +51,7 @@ const HelpPopUp = ({open, handleShowHelp}) => {
                             <input type="checkbox" id="help-cancel" name="help-cancel" value="true" />
                             <label for="help-cancel"> Don't show this help again</label>
                         </div>
-                        {/* <Popup
-                            trigger={<button className={styles['button']}> Trigger </button>}
-                            position="top center"
-                            nested
-                        >
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-                                magni omnis delectus nemo, maxime molestiae dolorem numquam
-                                mollitia, voluptate ea, accusamus excepturi deleniti ratione
-                                sapiente! Laudantium, aperiam doloribus. Odit, aut.
-                            </span>
-                        </Popup> */}
+                        
                         <button
                             className={styles['button']}
                             onClick={handleClose}
