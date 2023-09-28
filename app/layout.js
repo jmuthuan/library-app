@@ -1,13 +1,8 @@
 import Footer from './Components/Footer'
 import Header from './Components/Header'
+import HelpPopUp from './Components/HelpPopUp'
 import './globals.css'
 import { Saira } from 'next/font/google'
-/* import logo from '../src/logo1.png';
-import styles from '../styles/page.module.css';
-import Link from 'next/link'; */
-
-
-//const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -29,7 +24,7 @@ export default function RootLayout({ children }) {
 
   return (    
     <html lang="en">
-      <body className={font.className}>
+      <body className={font.className}>       
         <Header />
         {children}
         <Footer />

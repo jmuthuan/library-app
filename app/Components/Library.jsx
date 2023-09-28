@@ -10,6 +10,7 @@ import setNewMapBook from "@/utils/setNewMapBook";
 import sortBookMap from "@/utils/sortBookMap";
 import styled from "styled-components";
 import ArrowHelp from "./ArrowHelp";
+import HelpPopUp from "./HelpPopUp";
 
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
@@ -19,6 +20,7 @@ const Library = () => {
     const [genreFilter, setGenreFilter] = useState('All');
     const [isHover, setIsHover] = useState(false);
     const [isDraggin, setIsDraggin] = useState(false);
+    const [showHelp, setShowHelp] = useState(localStorage.getItem('ShowPopUp') === 'false' ? false : true);
 
     useEffect(() => {
         getAllBooks();
@@ -145,6 +147,10 @@ const Library = () => {
         setIsHover(false);
     }
 
+    const handleShowHelp = (show) => {
+        setShowHelp(show);
+    }
+
     //sync browser tabs information
     window.addEventListener('storage', event => {
         let available = new Map();
@@ -164,10 +170,14 @@ const Library = () => {
 
     return (
         <>
+            <HelpPopUp
+                open={showHelp}
+                handleShowHelp={handleShowHelp}
+            />
             <section className={styles.filters}>
                 <div className={styles['filter-pages-container']}>
-                    <label htmlFor="range" className={styles.label}>Filter by pages: </label>     
-                    <span className={styles.span}>{min}</span>               
+                    <label htmlFor="range" className={styles.label}>Filter by pages: </label>
+                    <span className={styles.span}>{min}</span>
                     <div className={styles['range-wrap']}>
                         <div className={styles['range-value']} id="rangeV"></div>
                         <input
@@ -199,7 +209,7 @@ const Library = () => {
 
             <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
                 <section className={styles['available-list']}>
-                    <span className={`${styles['help-span']} ${isDraggin ? '' : styles['hide-help']}`}>
+                    <span className={`${styles['help-span']} ${(isDraggin || showHelp) ? '' : styles['hide-help']}`}>
                         <h3 className={styles.h3}>Available Books: </h3>
                         <BookList
                             books={availableBooks}
@@ -209,20 +219,23 @@ const Library = () => {
                     </span>
                 </section>
 
-                <section className={`${styles.helper} ${isDraggin ? '' : styles['hide-help']}`}>
+                <section className={`${styles.helper} ${(isDraggin || showHelp) ? '' : styles['hide-help']}`}>
                     <ArrowHelp number={3} />
+                    <ArrowHelp number={3} className={styles['arrow-reverse']}/>
                 </section>
 
                 <section className={styles["readable-list"]}>
-                    <h3 className={styles.h3}>Read List Books: </h3>
-                    <BookList
-                        books={readBooks}
-                        genreFilter={'All'}
-                        maxPages={max}
-                        droppableId={'droppableRead'}
-                        isHover={isHover}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave} />
+                    <span className={`${styles['help-span']} ${(isDraggin || showHelp)? '' : styles['hide-help']}`}>
+                        <h3 className={styles.h3}>Read List Books: </h3>
+                        <BookList
+                            books={readBooks}
+                            genreFilter={'All'}
+                            maxPages={max}
+                            droppableId={'droppableRead'}
+                            isHover={isHover}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave} />
+                    </span>
                 </section>
             </DragDropContext>
         </>
