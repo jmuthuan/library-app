@@ -22,8 +22,12 @@ const Container = styled.div`
 `
 
 const BookContainer = styled.div`
-&.${styles[`droppableRead-container`]}{
-    height: ${(props) => (props.$hover? (props.$length*255) : (props.$length) * 92 +215*0)*1}px;
+&.${styles['droppableRead-container']}{
+    height: ${(props) => (props.$hover? (props.$length*255) : (props.$length) * 54 +220)}px;
+}
+
+&.${styles['droppableAvailable-container']}{
+    height: ${(props)=>(props.$hover ? (props.$length)*255 : '')}px;
 }
 `
 const BookList = ({ books, genreFilter, maxPages, droppableId, isHover, onMouseEnter, onMouseLeave }) => {
@@ -35,7 +39,7 @@ const BookList = ({ books, genreFilter, maxPages, droppableId, isHover, onMouseE
     useMemo(() => {
         let aux = []
         bookArray.forEach(() => {
-            aux.push(Math.random() * 20 - 10)
+            aux.push(Math.random() * 10 - 5)
         })      
         setAngles(aux);
     }, [bookArray.length])

@@ -1,35 +1,43 @@
-.book-container {    
+.book-container {
     position: relative;
     margin: 1rem 0;
 }
 
 .droppableRead-container {
-    display: flex;     
+    display: flex;
     min-height: 300px;
     flex-direction: column;
-    transition: all 0.3s linear;    
+    transition: all 0.3s linear;
 }
 
-.droppableAvailable-container{   
-    display: flex;    
+.droppableAvailable-container {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    gap: 1rem; 
+    gap: 1rem;
     min-height: 300px;
 }
 
-.book img {
-    width: 10rem;
+@media screen and (min-width: 360px) {
+    .book img {
+        width: 10rem;
+        max-width: 10rem;
+    }
 }
 
-.droppableRead { 
-    transition: all 0.2s linear;    
+@media screen and (min-width: 768px) {
+    .book img {
+        width: 15vw;
+        max-width: 10rem;
+    }
 }
 
-/* .drag-over {
-    background-color: red;
-} */
+
+
+.droppableRead {
+    transition: all 0.2s linear;
+}
 
 .droppableAvailable {
     border: 2px dashed green;

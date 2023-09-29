@@ -6,8 +6,6 @@ import '../../styles/ModalPopUp.css';
 
 const HelpPopUp = ({open, handleShowHelp}) => {
 
-    console.log(open)
-    
     if(!open) return;
 
     const handleClose = ()=>{

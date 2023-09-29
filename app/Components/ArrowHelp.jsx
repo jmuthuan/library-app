@@ -25,22 +25,21 @@ const ArrowHelp = ({ number, reverse = false }) => {
 export default ArrowHelp;
 
 const Arrowsvg = styled.svg`
-    stroke: white;   
+    stroke: rgba(88,158,133, 1);   
     animation: arrow-flash 1s ease-in-out ${props => props.$index * 0.1}s infinite;
 
 
 
     @keyframes arrow-flash {
         0%{
-            filter: drop-shadow( 3px 3px 2px rgba(250, 250, 250, 1));
+            filter: drop-shadow( 3px 3px 2px rgba(200, 250, 250, 1));
         }
 
         50%{
-            filter: drop-shadow( 3px 3px 2px rgba(250, 250, 250, 0));
-        }
+            filter: drop-shadow( 3px 3px 2px rgba(200, 250, 250, 0));
+        }  
         100%{
-            filter: drop-shadow( 3px 3px 2px rgba(250, 250, 250, 1));
-        }
-        
-    }
+            filter: drop-shadow( 3px 3px 2px rgba(200, 250, 250, 1));
+        }        
+    } 
 `
