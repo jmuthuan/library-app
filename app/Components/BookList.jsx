@@ -27,10 +27,12 @@ const BookContainer = styled.div`
 }
 
 &.${styles['droppableAvailable-container']}{
-    height: ${(props)=>(props.$hover ? (props.$length)*255 : '')}px;
+    height: ${(props)=>(props.$hover ? `${(props.$length)*255}px` : 'auto')};
 }
 `
-const BookList = ({ books, genreFilter, maxPages, droppableId, isHover, onMouseEnter, onMouseLeave }) => {
+const BookList = ({ books, genreFilter, maxPages,
+     droppableId, isHover, onMouseEnter,
+      onMouseLeave, favoriteToggle }) => {
 
     const [angles, setAngles] = useState([]);
 
@@ -73,6 +75,8 @@ const BookList = ({ books, genreFilter, maxPages, droppableId, isHover, onMouseE
                                             <Link href={`book/${book.ISBN}`}>                                                                                
                                                 <Book
                                                     book={book}
+                                                    droppableId={droppableId}                                                   
+                                                    favoriteToggle={favoriteToggle}
                                                     />
                                             </Link>
                                         </Container>

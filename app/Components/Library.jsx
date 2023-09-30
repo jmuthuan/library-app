@@ -11,6 +11,8 @@ import sortBookMap from "@/utils/sortBookMap";
 import styled from "styled-components";
 import ArrowHelp from "./ArrowHelp";
 import HelpPopUp from "./HelpPopUp";
+import ReadableListAlt from "./ReadableListAlt";
+import handleFavs from "@/utils/handleFavs";
 
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
@@ -20,7 +22,7 @@ const Library = () => {
     const [genreFilter, setGenreFilter] = useState('All');
     const [isHover, setIsHover] = useState(false);
     const [isDraggin, setIsDraggin] = useState(false);
-    const [showHelp, setShowHelp] = useState();
+    const [showHelp, setShowHelp] = useState();    
 
     useEffect(() => {
         getAllBooks();
@@ -44,9 +46,9 @@ const Library = () => {
             setReadBooks(read);
         }
         else {
-
             allBooks.forEach((book) => {
-                available.set(book.book.ISBN, book.book)
+                const newBook = {...book.book, isFavorite: false};
+                available.set(book.book.ISBN, newBook);                
             })
             setAvailableBooks(sortBookMap(available))
         }
@@ -158,6 +160,16 @@ const Library = () => {
         setShowHelp(show);
     }
 
+    const favoriteToggle = (isbn, listId) =>{ 
+        const {newAvailable, newReadable} = handleFavs(isbn, listId, availableBooks, readBooks);
+
+        setAvailableBooks(newAvailable);
+        setReadBooks(newReadable);
+
+        localStorage.setItem('readList', JSON.stringify([...newReadable]));
+        localStorage.setItem('availableList', JSON.stringify([...newAvailable]));
+    }
+
     //sync browser tabs information
     window.addEventListener('storage', event => {
         let available = new Map();
@@ -222,7 +234,8 @@ const Library = () => {
                             books={availableBooks}
                             genreFilter={genreFilter}
                             maxPages={maxPages}
-                            droppableId={'droppableAvailable'} />
+                            droppableId={'droppableAvailable'}                           
+                            favoriteToggle={favoriteToggle}/>
                     </span>
                 </section>
 
@@ -231,6 +244,7 @@ const Library = () => {
                     <ArrowHelp number={3} reverse={true}/>
                 </section>
 
+                       {/*  <ReadableListAlt /> */}
                 <section className={styles["readable-list"]}>
                     <span className={`${styles['help-span']} ${(isDraggin || showHelp)? '' : styles['hide-help']}`}>
                         <h3 className={styles.h3}>Read List Books: </h3>
@@ -241,7 +255,8 @@ const Library = () => {
                             droppableId={'droppableRead'}
                             isHover={isHover}
                             onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave} />
+                            onMouseLeave={handleMouseLeave}                          
+                            favoriteToggle={favoriteToggle} />
                     </span>
                 </section>
             </DragDropContext>

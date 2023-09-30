@@ -20,19 +20,42 @@
 }
 
 @media screen and (min-width: 360px) {
+    .book {       
+        width: min-content;
+    }
+
     .book img {
         width: 10rem;
         max-width: 10rem;
     }
-}
 
-@media screen and (min-width: 768px) {
-    .book img {
-        width: 15vw;
-        max-width: 10rem;
+    .favorite-icon {
+        z-index: 10;
+        position: relative;
+        left: 8.5rem;
+        bottom: 5rem;        
+        background-color: #000E;
+        filter: blur(1px);
+        clip-path: circle(1.5rem at 50% 50%);
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        align-content: center;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .favorite-icon>svg {
+        position: relative;
+        color: #589e85;
+        font-size: 2rem;
     }
 }
 
+/* @media screen and (min-width: 768px) {
+   
+} */
 
 
 .droppableRead {
