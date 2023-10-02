@@ -1,133 +1,260 @@
-.main{
+@media screen and (min-width: 360px) {
+  .main {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;  
-    padding: 2rem 10rem;
+    justify-content: space-between;
+    padding: 2rem 1rem;
     min-height: 100vh;
     background-image: url('../src/library1.jpg');
     background-size: cover;
     background-attachment: fixed;
-}
+  }
 
-.about-page, 
-.about-technoligies,
-.about-developers{
-    background-color: rgba(17,17,17, 0.8);
+  .about-page,
+  .about-technoligies,
+  .about-developers {
+    background-color: rgba(17, 17, 17, 0.8);
     border-radius: 10px;
     box-shadow: 12px 12px 4px rgba(0, 0, 0, 0.7);
-    padding: 16px;
+    padding: 1rem;
     margin-bottom: 2rem;
     line-height: 1.8rem;
-}
+    font-size: 0.8rem;
+  }
 
-.span{
+  .span {
     font-weight: 700;
     font-size: 1.5rem;
     text-decoration: underline;
-    margin-bottom: 1.5rem;
     margin-bottom: 1rem;
     display: block;
-}
+   /*  padding-left: 2rem; */
+    text-align: center;
+  }
 
-.about-technologies-info{
-  height: 10rem;
-}
+  .about-developers-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 4rem; */
+  }
+     
+  .about-avatar {
+    clip-path: circle(50% at 50% 50%);
+    width: 50vw;
+  }
 
-.about-technologies-logos{
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  justify-content: center;  
-  margin-top: 1rem;
-}
-
-.img-logo{
-    height: 64px; 
+  .img-logo {
+    height: 48px;
     top: 15%;
-    position: relative;  
-    animation: logo-animation-reverse 0.2s ease-in-out 0s normal backwards;
+    position: relative;
+   /*  animation: logo-animation-reverse 0.2s ease-in-out 0s normal backwards; */
   }
 
-  .img-logo:hover{
-    height: 96px;
-    top: 0%;
-    animation: logo-animation-640 0.4s ease-in-out 0s normal none;
+  .about-technologies-logos {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
   }
 
+    
+  .about-developer-avatar-name {
+    width: 90%;
+    display: inline-block;
+    /* margin-left: 8vw; */
+    text-align: center;
+    font-size: 1.2rem;
+  }
 
-  .developer-social-media>a>img{
+  .developer-social-media>a>img {
     height: 32px;
     margin: 1rem 1rem;
   }
+}
 
-  .about-developers-info{
+
+@media screen and (min-width: 640px) {
+  .main {
+    padding: 2rem 3rem;
+  }
+
+  .about-page,
+  .about-technoligies,
+  .about-developers {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    line-height: 1.8rem;
+  }
+
+  .span {
+    font-size: 1.8rem;  
+    padding: 0;
+    text-align: center;
+  }
+
+  .about-avatar {
+    clip-path: circle(50% at 50% 50%);
+    width: 25vw;
+    grid-area: img;
+  }
+
+  .about-developer-avatar-name {
+    display: grid;
+    grid-template-areas: "img name"
+                          "img title"
+                          "img social" ;
+    text-align: center;
+    /* width: 25%;
+    display: inline-block;
+    margin-left: 8vw;
+    text-align: center; */
+  }
+
+  
+  .developer-name {
+    font-size: 1.8rem;
+    width: 50vw;
+    text-align: center;
+    grid-area: name;
+    margin-bottom: 1.5rem;
+  }
+  
+  .developer-titles {
+    font-size: 1.5rem;
+    width: 50vw;
+    grid-area: title;
+  }
+
+  .developer-social-media{
+    grid-area: social;
+    margin-top: 1rem;
+  }
+
+  .about-developers-person {
+    margin-top: 0rem;
+  }
+
+  .img-logo {
+    height: 64px;
+    top: 15%;
+    position: relative;
+    animation: logo-animation-reverse 0.2s ease-in-out 0s normal backwards;
+  }
+
+  .about-technologies-logos {
+    gap: 1rem;
+  }
+  
+}
+
+@media screen and (min-width: 900px) {
+  .main {
+    padding: 2rem 3rem;
+  }
+
+  .about-page,
+  .about-technoligies,
+  .about-developers {
+    padding: 1.5rem;
+/*     margin-bottom: 2rem;
+    line-height: 1.8rem; */
+    font-size: 1rem;
+  }
+
+  .span {
+    padding-left: 2rem;
+    font-size: 2rem;
+  }
+
+  .about-developers-info {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 4rem;
+    align-items: flex-start;
   }
-
+  
   .about-developer-avatar-name {
     width: 25%;
     display: inline-block;
     margin-left: 8vw;
     text-align: center;
   }
+  
+  .developer-name {
+    font-size: 2.5vw;
+    text-align: center;
+    width: 100%;
 
-  .developer-name{
-    font-size: 2rem;
   }
-  .developer-titles{
-    font-size: 1.5rem;
+  
+  .developer-titles {
+    font-size: 1.8vw;
+    text-align: center;
+    width: 100%; 
+    
   }
-
-  .about-developers-person {   
+  
+  .about-developers-person {
     width: 60%;
     position: relative;
     text-align: start;
-  }
-/* 
-  .about-developers {
-    display: inline-block;
-  }
-
-  .about-developers-info>div{
-    text-align: center;    
+    margin-top: 4rem;
   }
   
- 
-
- 
-   */
+  
   .about-avatar {
     clip-path: circle(50% at 50% 50%);
-    width: 15vw;
+    width: 20vw;
   }
 
+  .about-technologies-info {
+    height: 10rem;
+  }
 
-
+  .developer-social-media>a>img {
+    height: 40px;
+    margin: 1rem 1rem;
+  }
   
-  @keyframes logo-animation-640 {
-    0%{
-      height: 64px;
-      top: 15%;
-    }
+}
 
-    100%{
-      height: 96px;
-      top: 0%;
-    }    
+
+
+
+.img-logo:hover {
+  height: 96px;
+  top: 0%;
+  animation: logo-animation-640 0.4s ease-in-out 0s normal none;
+}
+
+
+
+
+
+@keyframes logo-animation-640 {
+  0% {
+    height: 64px;
+    top: 15%;
   }
 
-  
-  @keyframes logo-animation-reverse {
-    0%{
-      height: 96px;
-      top: 0%;
-    }
-
-    100%{
-      height: 64px;
-      top: 15%;
-    }    
+  100% {
+    height: 96px;
+    top: 0%;
   }
+}
+
+
+@keyframes logo-animation-reverse {
+  0% {
+    height: 96px;
+    top: 0%;
+  }
+
+  100% {
+    height: 64px;
+    top: 15%;
+  }
+}

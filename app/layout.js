@@ -14,12 +14,6 @@ const font = Saira({
   subsets: ['latin']
 })
 
-export async function getServerSideProps(context) {
-  return {
-    props: { message: `Next.js is awesome` }, // will be passed to the page component as props
-  }
-}
-
 export default function RootLayout({ children }) {
 
   return (    

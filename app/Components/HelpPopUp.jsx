@@ -32,7 +32,7 @@ const HelpPopUp = ({open, handleShowHelp}) => {
                     </button>
                     <div className={styles['header']}> Welcome!!! </div>
                     <div className={styles['content']}>
-                        {' '}
+                        {/* {' '} */}
                         On the site you have two list of books. One of this list is 'Available Books',
                         where you can click on any book to get more information about it.
                         Additionally, you can select your favourites books and place them in the
