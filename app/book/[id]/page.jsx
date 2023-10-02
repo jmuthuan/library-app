@@ -15,6 +15,7 @@ const BookDetail = async ({ params }) => {
     return (
         <main className={`${font.className} ${styles.main}`}>
             <div className={styles.book}>
+            <h2 className={styles['h2-360']}>{bookDetail.title}</h2>
                 <img src={bookDetail.cover} alt={`cover of book ${bookDetail.title}`} />
                 <section className={styles['book-info']}>
                     <h2 className={styles.h2}>{bookDetail.title}</h2>

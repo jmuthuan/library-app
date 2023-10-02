@@ -91,11 +91,17 @@
     box-shadow: 12px 12px 4px rgba(0, 0, 0, 0.7);
     padding: 16px;
     grid-area: book;
+    height: max-content;
 
     /* visibility: hidden; */
   }
 
-  .readable-list {
+  .available-hide{
+    visibility: hidden;
+    height: 0;
+  }
+
+  /* .readable-list {
     margin-top: 1.5rem;
     width: 90%;   
     grid-area: read;
@@ -107,7 +113,7 @@
     left: 30vw;
 
     left: 0;
-  }
+  } */
   
 }
 
@@ -118,13 +124,13 @@
     padding: 16px;
   }
 
-  .readable-list {
+  /* .readable-list {
     margin-top: 1.5rem;
     width: 25%;    
     grid-area: read;
     left: 0%;
     padding: 1.5rem;
-  }
+  } */
 }
 
 

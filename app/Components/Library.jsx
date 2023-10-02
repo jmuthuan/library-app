@@ -22,7 +22,8 @@ const Library = () => {
     const [genreFilter, setGenreFilter] = useState('All');
     const [isHover, setIsHover] = useState(false);
     const [isDraggin, setIsDraggin] = useState(false);
-    const [showHelp, setShowHelp] = useState();    
+    const [showHelp, setShowHelp] = useState();
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         getAllBooks();
@@ -47,8 +48,8 @@ const Library = () => {
         }
         else {
             allBooks.forEach((book) => {
-                const newBook = {...book.book, isFavorite: false};
-                available.set(book.book.ISBN, newBook);                
+                const newBook = { ...book.book, isFavorite: false };
+                available.set(book.book.ISBN, newBook);
             })
             setAvailableBooks(sortBookMap(available))
         }
@@ -58,12 +59,12 @@ const Library = () => {
 
     }, [allBooks])
 
-    useEffect(()=>{
+    useEffect(() => {
         const showHelpLocale = localStorage.getItem('ShowPopUp') === 'false' ? false : true;
         const showHelpSession = sessionStorage.getItem('ShowPopUp') === 'false' ? false : true;
 
         setShowHelp(showHelpLocale && showHelpSession);
-    },[])
+    }, [])
 
     const getAllBooks = async () => {
         let allBk = await getBooks();
@@ -160,8 +161,12 @@ const Library = () => {
         setShowHelp(show);
     }
 
-    const favoriteToggle = (isbn, listId) =>{ 
-        const {newAvailable, newReadable} = handleFavs(isbn, listId, availableBooks, readBooks);
+    const handleOpenRead = () => {
+        setIsOpen(prev => !prev);
+    }
+
+    const favoriteToggle = (isbn, listId) => {
+        const { newAvailable, newReadable } = handleFavs(isbn, listId, availableBooks, readBooks);
 
         setAvailableBooks(newAvailable);
         setReadBooks(newReadable);
@@ -227,25 +232,36 @@ const Library = () => {
             </section>
 
             <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-                <section className={styles['available-list']}>
+                <section className={`${styles['available-list']} ${isOpen ? styles['available-hide'] :''}`}>
                     <span className={`${styles['help-span']} ${(isDraggin || showHelp) ? '' : styles['hide-help']}`}>
                         <h3 className={styles.h3}>Available Books: </h3>
                         <BookList
                             books={availableBooks}
                             genreFilter={genreFilter}
                             maxPages={maxPages}
-                            droppableId={'droppableAvailable'}                           
-                            favoriteToggle={favoriteToggle}/>
+                            droppableId={'droppableAvailable'}                     
+                            favoriteToggle={favoriteToggle} />
                     </span>
                 </section>
 
                 <section className={`${styles.helper} ${(isDraggin || showHelp) ? '' : styles['hide-help']}`}>
                     <ArrowHelp number={3} />
-                    <ArrowHelp number={3} reverse={true}/>
+                    <ArrowHelp number={3} reverse={true} />
                 </section>
 
-                       {/*  <ReadableListAlt /> */}
-                <section className={styles["readable-list"]}>
+                <ReadableListAlt
+                    readBooks={readBooks}                    
+                    max={max}
+                    isHover={isHover}
+                    isDraggin={isDraggin}
+                    showHelp={showHelp}
+                    isOpen={isOpen}
+                    handleMouseEnter={handleMouseEnter}
+                    handleMouseLeave={handleMouseLeave}
+                    favoriteToggle={favoriteToggle}
+                    handleOpenRead={handleOpenRead}
+                />
+                {/* <section className={styles["readable-list"]}>
                     <span className={`${styles['help-span']} ${(isDraggin || showHelp)? '' : styles['hide-help']}`}>
                         <h3 className={styles.h3}>Read List Books: </h3>
                         <BookList
@@ -258,7 +274,7 @@ const Library = () => {
                             onMouseLeave={handleMouseLeave}                          
                             favoriteToggle={favoriteToggle} />
                     </span>
-                </section>
+                </section> */}
             </DragDropContext>
         </>
     )

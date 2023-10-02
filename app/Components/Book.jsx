@@ -2,7 +2,7 @@ import styles from '../../styles/BookList.module.css';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 
-const Book = ({ book, favoriteToggle, droppableId }) => {
+const Book = ({ book, droppableId, favoriteToggle }) => {
 
     const handleFavoriteToggle = (e) => {
         e.preventDefault();
@@ -13,7 +13,8 @@ const Book = ({ book, favoriteToggle, droppableId }) => {
 
     return (
         <div className={styles.book}>
-            <img
+            <img 
+                className={styles[`${droppableId}-img`]}
                 src={book.cover}
                 alt={`of book ${book.title}`}
             />
