@@ -11,8 +11,8 @@ import { useMemo, useState } from "react";
 const Container = styled.div`      
     &.droppableRead{
         position: relative;
-        bottom: ${props => (props.$hover ? props.$index * 0 : props.$index * 200)}px;
-        transform: rotate(${props => props.$angle * 0}deg);
+        /* bottom: ${props => (props.$hover ? props.$index * 0 : props.$index * 200)}px; */
+        transform: rotate(${props => props.$angle}deg);
         z-index: ${props => props.$index};            
     }
 
@@ -34,10 +34,9 @@ const Container = styled.div`
 `
 
 const BookContainer = styled.div`
-
-&.${styles['droppableAvailable-container']}{
-    height: ${(props) => (props.$hover ? `${(props.$length) * 255}px` : 'auto')};
-}
+    &.${styles['droppableAvailable-container']}{
+        height: ${(props) => (props.$hover ? `${(props.$length) * 255}px` : 'auto')};
+    }
 
 @media screen and (min-width: 768px){
     &.${styles['droppableRead-container']}{
@@ -47,7 +46,7 @@ const BookContainer = styled.div`
 
 @media screen and (min-width: 920px){
     &.${styles['droppableRead-container']}{
-        height: ${(props) => (props.$hover ? (props.$length * 255) : (props.$length) * 54 + 220)}px;
+        height: ${(props) => (props.$hover ? ((props.$length +(props.$drag? 1: 0)) * 255) : (props.$length) * 54 + 220)}px;
     }    
 }
 `
@@ -71,13 +70,15 @@ const BookList = ({ books, genreFilter, maxPages,
         <><span className={styles.span} > {bookArray.length} books</span>
             <Droppable droppableId={droppableId} >
                 {(provided, snapshot) => (
-                    <BookContainer className={`${styles['book-container']} ${styles[`${droppableId}-container`]} ${snapshot.isDraggingOver ? styles['drag-over'] : ''}`}
+                    <BookContainer
+                        className={`${styles['book-container']} ${styles[`${droppableId}-container`]} ${snapshot.isDraggingOver ? styles['drag-over'] : ''}`}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         $length={bookArray.length}
                         $hover={isHover}
+                        $drag={snapshot.isDraggingOver}
                     >
 
                         {bookArray.map((book, index) => {

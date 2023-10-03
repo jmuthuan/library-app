@@ -5,14 +5,14 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 const Book = ({ book, droppableId, favoriteToggle }) => {
 
     const handleFavoriteToggle = (e) => {
-        e.preventDefault();
-        favoriteToggle(book.ISBN, droppableId);
+        e.preventDefault();        
+        favoriteToggle(book.ISBN, droppableId);  
     }
 
     const show = window.innerWidth > 768 ? true : false;
 
     return (
-        <div className={styles.book}>
+        <div className={styles.book} id={book.ISBN}>
             <img 
                 className={styles[`${droppableId}-img`]}
                 src={book.cover}

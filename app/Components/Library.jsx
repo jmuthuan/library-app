@@ -13,6 +13,8 @@ import ArrowHelp from "./ArrowHelp";
 import HelpPopUp from "./HelpPopUp";
 import ReadableListAlt from "./ReadableListAlt";
 import handleFavs from "@/utils/handleFavs";
+import animateReadList from "@/utils/animateReadList";
+import animateAvailableBook from "@/utils/animateAvailableBook";
 
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
@@ -24,6 +26,7 @@ const Library = () => {
     const [isDraggin, setIsDraggin] = useState(false);
     const [showHelp, setShowHelp] = useState();
     const [isOpen, setIsOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState();
 
     useEffect(() => {
         getAllBooks();
@@ -64,6 +67,8 @@ const Library = () => {
         const showHelpSession = sessionStorage.getItem('ShowPopUp') === 'false' ? false : true;
 
         setShowHelp(showHelpLocale && showHelpSession);
+
+        setIsMobile(window.innerWidth < 768 ? true : false);
     }, [])
 
     const getAllBooks = async () => {
@@ -165,11 +170,22 @@ const Library = () => {
         setIsOpen(prev => !prev);
     }
 
+
     const favoriteToggle = (isbn, listId) => {
         const { newAvailable, newReadable } = handleFavs(isbn, listId, availableBooks, readBooks);
 
-        setAvailableBooks(newAvailable);
-        setReadBooks(newReadable);
+        if (!isOpen) {
+            animateReadList();
+            animateAvailableBook(isbn);
+
+            setTimeout(() => {
+                setAvailableBooks(newAvailable);
+                setReadBooks(newReadable);
+            }, 350)
+        }else{
+            setAvailableBooks(newAvailable);
+            setReadBooks(newReadable);
+        }
 
         localStorage.setItem('readList', JSON.stringify([...newReadable]));
         localStorage.setItem('availableList', JSON.stringify([...newAvailable]));
@@ -190,6 +206,17 @@ const Library = () => {
         setReadBooks(read)
 
 
+    })
+
+    let timeout = null;
+
+    window.addEventListener('resize', event => {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => {
+            let mobile = window.innerWidth < 768 ? true : false;
+            setIsMobile(mobile);
+        }, 200)
     })
 
     return (
@@ -232,30 +259,31 @@ const Library = () => {
             </section>
 
             <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-                <section className={`${styles['available-list']} ${isOpen ? styles['available-hide'] :''}`}>
+                <section className={`${styles['available-list']} ${isOpen ? styles['available-hide'] : ''}`}>
                     <span className={`${styles['help-span']} ${(isDraggin || showHelp) ? '' : styles['hide-help']}`}>
                         <h3 className={styles.h3}>Available Books: </h3>
                         <BookList
                             books={availableBooks}
                             genreFilter={genreFilter}
                             maxPages={maxPages}
-                            droppableId={'droppableAvailable'}                     
+                            droppableId={'droppableAvailable'}
                             favoriteToggle={favoriteToggle} />
                     </span>
                 </section>
 
-                <section className={`${styles.helper} ${(isDraggin || showHelp) ? '' : styles['hide-help']}`}>
+                <section className={`${styles.helper} ${(isDraggin || showHelp) ? '' : styles['hide-arrow']}`}>
                     <ArrowHelp number={3} />
                     <ArrowHelp number={3} reverse={true} />
                 </section>
 
                 <ReadableListAlt
-                    readBooks={readBooks}                    
+                    readBooks={readBooks}
                     max={max}
                     isHover={isHover}
                     isDraggin={isDraggin}
                     showHelp={showHelp}
                     isOpen={isOpen}
+                    isMobile={isMobile}
                     handleMouseEnter={handleMouseEnter}
                     handleMouseLeave={handleMouseLeave}
                     favoriteToggle={favoriteToggle}

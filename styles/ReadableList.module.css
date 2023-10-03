@@ -28,6 +28,10 @@
         left: 2.4rem;
     }
 
+    .animate{
+      animation: read-list-shake 0.5s linear 0s 1;
+    }
+
     .title-icon {
         width: 20%;
         display: flex;
@@ -81,7 +85,7 @@
         width: 25%;    
         grid-area: read;
         left: 0%;
-        padding: 1.5rem 0;
+        padding: 1.5rem 1rem;
       }
     
       .h3 {
@@ -123,4 +127,23 @@
     100% {
       border: 2px rgba(88, 158, 133, 1) dashed;
     }
+  }
+
+  @keyframes read-list-shake {
+    0%{
+      bottom: 0px;
+    }
+    33%{
+      bottom: 10px;
+      transform: rotateY(-30deg);
+    }
+    66%{
+      bottom: -10px;
+    }
+    100%{
+      bottom: 0px;
+      transform: rotateY(30deg);
+    }
+
+    
   }

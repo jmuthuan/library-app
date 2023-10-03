@@ -106,3 +106,21 @@
 .droppableAvailable {
     border: 2px dashed green;
 }
+
+.animate-book{
+    animation: book-fade 0.3s ease-in 0s 1;
+}
+
+@keyframes book-fade {
+    from { 
+        position: relative;
+        left: 0px;
+    }
+    to{
+        position: relative;
+        left: 500px;
+        transform: scale(0.3);
+        opacity: 0.2;
+    }
+    
+}

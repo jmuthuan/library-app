@@ -1,16 +1,14 @@
 import styles from '../../styles/ReadableList.module.css';
-import { useState } from 'react';
-//import styles from '../../styles/Library.module.css';
 import { FaChevronLeft, FaTimes } from 'react-icons/fa';
 import BookList from "./BookList";
 
-const ReadableListAlt = ({ isDraggin, isOpen, showHelp, readBooks,
+const ReadableListAlt = ({ isDraggin, isOpen, showHelp, readBooks, isMobile,
     max, isHover, handleMouseEnter, handleMouseLeave, favoriteToggle, handleOpenRead }) => {
 
-    if (window.innerWidth < 768) {
-        
+    if (isMobile) {        
         return (
-            <section className={`${styles['readable-list']} ${!isOpen ? styles['hide-readable'] : styles['show-readable']}`}>
+            <section id='readList' 
+                    className={`${styles['readable-list']} ${!isOpen ? styles['hide-readable'] : styles['show-readable']}`}>
                 <div className={`${isOpen ? styles['title-icon-show'] : styles['title-icon']}`}>
                     <FaChevronLeft className={`${isOpen ? styles['hide-item'] : styles['show-item']} ${styles['item']}`}
                         onClick={handleOpenRead} />
@@ -44,7 +42,7 @@ const ReadableListAlt = ({ isDraggin, isOpen, showHelp, readBooks,
                         isHover={isHover}
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
-                        /* favoriteToggle={favoriteToggle}  *//>
+                    />
                 </span>
             </section>
         )
