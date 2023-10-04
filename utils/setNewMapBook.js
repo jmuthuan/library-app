@@ -3,6 +3,15 @@ import filterBooks from "./filterBooks";
 const setNewMapBook = (sourceDrop, destinationDrop, sourceBookMap, destinationBookMap, genreFilter, maxPages) => {
 
     let book = filterBooks(sourceBookMap, genreFilter, maxPages)[sourceDrop.index]
+
+    if(destinationDrop.droppableId === 'droppableAvailable'){
+        console.log('available')
+        book.isFavorite = false;
+    }else{
+        console.log('read')
+        book.isFavorite = true;
+    }
+
     const isbn = book.ISBN;
   
     let destinationBookArray = Array.from(destinationBookMap.values()); 
@@ -14,12 +23,11 @@ const setNewMapBook = (sourceDrop, destinationDrop, sourceBookMap, destinationBo
     })
 
     let sourceBookArray = Array.from(sourceBookMap.values());
-    //const sourceIndex = sourceBookArray.findIndex(element => element.ISBN === isbn)     
+   
     let newSourceBookMap = new Map()
 
     sourceBookArray.splice(sourceDrop.index, 1);     
-    if (sourceDrop.droppableId === destinationDrop.droppableId) {
-        //const destinationIndex = destinationBookArray.findIndex(element => element.ISBN === isbn)
+    if (sourceDrop.droppableId === destinationDrop.droppableId) {        
         sourceBookArray.splice(destinationDrop.index, 0, book);
     }
 

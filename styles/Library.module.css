@@ -94,11 +94,11 @@
     height: max-content;
   }
 
-  .available-hide{
+  .available-hide {
     visibility: hidden;
     height: 0;
   }
- 
+
 }
 
 @media screen and (min-width: 768px) {
@@ -152,7 +152,7 @@
     font-size: 0.7rem;
   }
 
-  .help-span{
+  .help-span {
     animation: none;
   }
 }
@@ -184,6 +184,16 @@
   margin: 0.5rem 0;
 }
 
+.loading {
+  width: 100vw;
+  max-width: calc(100vw - 6rem);
+  background-color: rgba(17, 17, 17, 0.9);
+  border-radius: 10px;
+  box-shadow: 12px 12px 4px rgba(0, 0, 0, 0.7);
+  padding: 1rem 0.5rem;
+  height: 6rem;
+  font-size: 1.5rem;
+}
 
 
 @keyframes flash-help {
@@ -216,12 +226,12 @@
     width: 15%;
   }
 
- 
+
   .hide-help {
     animation: none;
     border: 2px rgba(250, 250, 250, 0) dashed;
   }
-  
+
   .arrow-div {
     /* visibility: hidden; */
     transform: scaleX(0.8);
@@ -234,11 +244,10 @@
   .arrow-reverse {
     transform: scaleX(-0.8);
     left: 0;
-    
+
   }
 
-  .hide-arrow{
+  .hide-arrow {
     visibility: hidden;
   }
 }
-

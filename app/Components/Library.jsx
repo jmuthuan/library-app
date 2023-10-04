@@ -14,7 +14,10 @@ import HelpPopUp from "./HelpPopUp";
 import ReadableListAlt from "./ReadableListAlt";
 import handleFavs from "@/utils/handleFavs";
 import animateReadList from "@/utils/animateReadList";
-import animateAvailableBook from "@/utils/animateAvailableBook";
+import animateBook from "@/utils/animateBook";
+import animateBookReverse from "@/utils/animateBookReverse";
+import animateOpenClose from "@/utils/animateOpenClose";
+import Loading from "./Loading";
 
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
@@ -85,7 +88,7 @@ const Library = () => {
         setGenreFilter(e.target.value)
     }
 
-    if (allBooks?.length === 0) { return (<div>Loading...</div>) } //TODO - Loading skeleton
+    if (allBooks?.length === 0) { return (<Loading />) } 
 
     let { min, max } = getMinMaxPages(allBooks)
     let genres = ['All'];
@@ -153,7 +156,6 @@ const Library = () => {
         setIsDraggin(true)
     }
 
-
     const handleMouseEnter = () => {
         setIsHover(true);
     }
@@ -167,7 +169,10 @@ const Library = () => {
     }
 
     const handleOpenRead = () => {
-        setIsOpen(prev => !prev);
+        animateOpenClose(isOpen);
+        setTimeout(()=>{
+            setIsOpen(prev => !prev);
+        }, 150)        
     }
 
 
@@ -176,15 +181,19 @@ const Library = () => {
 
         if (!isOpen) {
             animateReadList();
-            animateAvailableBook(isbn);
+            animateBook(isbn);
 
             setTimeout(() => {
                 setAvailableBooks(newAvailable);
                 setReadBooks(newReadable);
             }, 350)
         }else{
-            setAvailableBooks(newAvailable);
-            setReadBooks(newReadable);
+            setTimeout(()=>{
+                setAvailableBooks(newAvailable);
+                setReadBooks(newReadable);
+            }, 350)
+           
+            animateBookReverse(isbn);
         }
 
         localStorage.setItem('readList', JSON.stringify([...newReadable]));
@@ -288,21 +297,7 @@ const Library = () => {
                     handleMouseLeave={handleMouseLeave}
                     favoriteToggle={favoriteToggle}
                     handleOpenRead={handleOpenRead}
-                />
-                {/* <section className={styles["readable-list"]}>
-                    <span className={`${styles['help-span']} ${(isDraggin || showHelp)? '' : styles['hide-help']}`}>
-                        <h3 className={styles.h3}>Read List Books: </h3>
-                        <BookList
-                            books={readBooks}
-                            genreFilter={'All'}
-                            maxPages={max}
-                            droppableId={'droppableRead'}
-                            isHover={isHover}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}                          
-                            favoriteToggle={favoriteToggle} />
-                    </span>
-                </section> */}
+                />                
             </DragDropContext>
         </>
     )
@@ -312,9 +307,6 @@ const Arrow = styled.span`
 position: relative;
 top: 200px;
 right: ${props => props.$index * 20}px;
-
 `
-
-
 
 export default Library;

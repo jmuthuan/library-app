@@ -25,11 +25,19 @@
 
     .hide-readable{
         position: relative;
-        left: 2.4rem;
+        right: -2.4rem;
     }
 
     .animate{
       animation: read-list-shake 0.5s linear 0s 1;
+    }
+
+    .animate-show{
+      animation: show-readable 0.2s ease-out 0s 1;
+    }
+
+    .animate-hide{
+      animation: hide-readable 0.2s ease-out 0s 1;
     }
 
     .title-icon {
@@ -143,7 +151,29 @@
     100%{
       bottom: 0px;
       transform: rotateY(30deg);
-    }
+    }    
+  }
 
+  @keyframes show-readable {
+    from{
+      right: -2.4rem;
+      width: 15rem;
+    }
+    to{ 
+      right: calc(100vw - 8rem);
+      width: calc(100vw - 6rem);
+    }
+    
+  }
+
+  @keyframes hide-readable {
+    from{
+      right: calc(100vw - 8rem);
+      width: calc(100vw - 6rem);
+    }
+    to{ 
+      right: -2.4rem;
+      width: 15rem;
+    }
     
   }

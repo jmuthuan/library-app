@@ -111,6 +111,10 @@
     animation: book-fade 0.3s ease-in 0s 1;
 }
 
+.animate-reverse{
+    animation: book-reverse 0.3s ease-out 0s 1;
+}
+
 @keyframes book-fade {
     from { 
         position: relative;
@@ -118,9 +122,22 @@
     }
     to{
         position: relative;
-        left: 500px;
+        left: 300px;
+        transform: scale(0.3);
+        opacity: 0.2;
+    }    
+}
+
+@keyframes book-reverse {
+    from{
+        position: relative;
+        right: 0px;
+    }
+
+    to{
+        position: relative;
+        right: 500px;
         transform: scale(0.3);
         opacity: 0.2;
     }
-    
 }
