@@ -1,6 +1,5 @@
 import Footer from './Components/Footer'
 import Header from './Components/Header'
-import HelpPopUp from './Components/HelpPopUp'
 import './globals.css'
 import { Saira } from 'next/font/google'
 

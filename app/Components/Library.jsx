@@ -19,6 +19,13 @@ import animateBookReverse from "@/utils/animateBookReverse";
 import animateOpenClose from "@/utils/animateOpenClose";
 import Loading from "./Loading";
 
+import { Saira } from 'next/font/google'
+
+const font = Saira({
+  weight: ['400', '700'],
+  subsets: ['latin']
+})
+
 const Library = () => {
     const [allBooks, setAllBooks] = useState([]);
     const [readBooks, setReadBooks] = useState(new Map());
@@ -186,12 +193,12 @@ const Library = () => {
             setTimeout(() => {
                 setAvailableBooks(newAvailable);
                 setReadBooks(newReadable);
-            }, 350)
+            }, 200)
         }else{
             setTimeout(()=>{
                 setAvailableBooks(newAvailable);
                 setReadBooks(newReadable);
-            }, 350)
+            }, 200)
            
             animateBookReverse(isbn);
         }
@@ -255,7 +262,7 @@ const Library = () => {
 
                 <div className={styles['filter-genre-container']}>
                     <label htmlFor="page-genre" className={styles.label}>Filter by genre: </label>
-                    <select className={styles.select} name="page-genre" id="page-genre" onChange={handleGenre}>
+                    <select className={`${styles.select} ${font.className}`} name="page-genre" id="page-genre" onChange={handleGenre}>
                         {
                             genres.map(genre => {
                                 return (

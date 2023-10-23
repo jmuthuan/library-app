@@ -8,7 +8,8 @@ const sortBookMap = (mapBook) => {
         arrayISBN.push(book.ISBN)
     });
 
-    let sortedTitle = arrayTitle.toSorted();
+    let sortedTitle = arrayTitle.sort();
+    //let sortedTitle = arrayTitle.toSorted();
 
     let sortMap = new Map();
 

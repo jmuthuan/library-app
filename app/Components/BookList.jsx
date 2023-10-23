@@ -71,6 +71,7 @@ const BookList = ({ books, genreFilter, maxPages,
             <Droppable droppableId={droppableId} >
                 {(provided, snapshot) => (
                     <BookContainer
+                        id={droppableId}
                         className={`${styles['book-container']} ${styles[`${droppableId}-container`]} ${snapshot.isDraggingOver ? styles['drag-over'] : ''}`}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
@@ -94,7 +95,7 @@ const BookList = ({ books, genreFilter, maxPages,
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}>
-                                            <Link href={`book/${book.ISBN}`}>
+                                            <Link href={`book/${book.ISBN}`} description={book.ISBN}>
                                                 <Book
                                                     book={book}
                                                     droppableId={droppableId}
